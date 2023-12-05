@@ -33,6 +33,8 @@ ol.addEventListener("click", function (event) {
     }
   });
 
+  /*** Functions */
+
   function startQuiz() {}
 function message(string) {
   console.log(string);
