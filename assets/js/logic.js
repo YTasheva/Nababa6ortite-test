@@ -14,7 +14,7 @@ var Feedback = document.querySelector("#feedback-hide");
 //Other variables
 var questionIndex = 0;
 var countdownTimer = 0;
-var highScoresList = document.createElement("highscores")
+var highScoresList = document.createElement("highscores");
 choicesDiv.appendChild(highScoresList);
 var highScoresList = document.querySelector("highscores");
 
@@ -36,9 +36,10 @@ highScoresList.addEventListener("click", function (event) {
   }
 });
 
-  //Functions
+//Functions
 
-  function startGame() {}
+function startGame() {}
+
 function message(string) {
   console.log(string);
   let p1 = document.createElement("p");
@@ -54,63 +55,56 @@ function message(string) {
 }
 
 function startCountdown() {
-    countdownTimer = 60;
+  countdownTimer = 60;
+  spanTime.textContent = countdownTimer;
+  let intervalId = setInterval(function () {
+    countdownTimer--;
     spanTime.textContent = countdownTimer;
-    let intervalId = setInterval(function () {
-      countdownTimer--;
+    console.log(countdownTimer);
+    if (countdownTimer > 0 && questionIndex >= questions.length) {
+      clearInterval(intervalId);
       spanTime.textContent = countdownTimer;
-      console.log(countdownTimer);
-      if (countdownTimer > 0 && questionIndex >= questions.length) {
-        clearInterval(intervalId);
-        spanTime.textContent = countdownTimer;
-        divQuestions.setAttribute("class", "hide");
-        divEndScreen.setAttribute("class", "start");
-        spanFinalScore.textContent = countdownTimer;
-      }
-      if (countdownTimer <= 0) {
-        clearInterval(intervalId);
-        spanTime.textContent = 0;
-        divQuestions.setAttribute("class", "hide");
-        divEndScreen.setAttribute("class", "start");
-        spanFinalScore.textContent = 0;
-      }
-    }, 1000);
-  }
-
-  function stopCountdown() {
-  }
-
-  function displayQuestions(index) {
-    if (questionIndex < questions.length) {
-      questionTitle.textContent = questions[questionIndex].question;
-      console.log(questionIndex);
-      console.log(questions.length);
-      for (let i = 0; i < questions[questionIndex].answers.length; i++) {
-        let li = document.createElement("li");
-        let highScoresList = document.querySelector("ol");
-        highScoreslist.appendChild(li);
-        let buttonAnswer = document.createElement("button");
-        buttonAnswer.setAttribute("data-state", i);
-        buttonAnswer.textContent = questions[index].answers[i];
-        li.appendChild(buttonAnswer);
-      }
-    } else {
-      questionTitle.textContent = "";
+      questionsDiv.setAttribute("class", "hide");
+      EndScreen.setAttribute("class", "start");
+      finalScoreP.textContent = countdownTimer;
     }
+    if (countdownTimer <= 0) {
+      clearInterval(intervalId);
+      spanTime.textContent = 0;
+      questionsDiv.setAttribute("class", "hide");
+      EndScreen.setAttribute("class", "start");
+      finalScoreP.textContent = 0;
+    }
+  }, 1000);
+}
+
+function stopCountdown() {}
+
+function displayQuestions(index) {
+  if (questionIndex < questions.length) {
+    questionTitle.textContent = questions[questionIndex].question;
+    console.log(questionIndex);
+    console.log(questions.length);
+    for (let i = 0; i < questions[questionIndex].answers.length; i++) {
+      let li = document.createElement("li");
+      let ol = document.querySelector("ol");
+      ol.appendChild(li);
+      let buttonAnswer = document.createElement("button");
+      buttonAnswer.setAttribute("data-state", i);
+      buttonAnswer.textContent = questions[index].answers[i];
+      li.appendChild(buttonAnswer);
+    }
+  } else {
+    questionTitle.textContent = "";
   }
+}
 
-  startQuizz.addEventListener("click", function () {
-    startCountdown();
-    divScreenStart.setAttribute("class", "hide");
-    questionsDiv.setAttribute("class", "");
-    displayQuestions(questionIndex);
-  });
-  
-  // Retrieves the high scores from local storage
-var highscore = localStorage.getItem("scores");
-
-// Parses the JSON string into a JavaScript array
-var scoresArray = JSON.parse(scores) || [];
+startGame.addEventListener("click", function () {
+  startCountdown();
+  StartScreen.setAttribute("class", "hide");
+  questionsDiv.setAttribute("class", "");
+  displayQuestions(questionIndex);
+});
 submitBtn.addEventListener("click", function (event) {
   event.preventDefault;
 
@@ -133,10 +127,10 @@ scoresArray.sort(function(a, b) {
   }
 });
 
-// Converts the array back into a JSON string
+// Convert the array back into a JSON string
 var scoresJSON = JSON.stringify(scoresArray);
 
-// Saves the JSON string in local storage
+// Save the JSON string in local storage
 localStorage.setItem("scores", scoresJSON);
 document.location.assign("highscores.html");
 }
