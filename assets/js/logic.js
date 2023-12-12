@@ -1,58 +1,49 @@
 // References to elements
-var divScreenStart = document.querySelector("#start-screen");
-var startBtn = document.querySelector("#start-button");
+var StartScreen = document.querySelector("#start-screen");
+var startGame = document.querySelector("#start-game");
 var questionsDiv = document.querySelector("#questionsDiv");
 var questionTitle = document.querySelector("#question-title");
-var choicesDiv = document.querySelector("#choicesDiv");
+var choicesDiv = document.querySelector("#choices");
 var spanTime = document.querySelector("#time");
-var divEndScreen = document.querySelector("#end-screen");
-var spanFinalScore = document.querySelector("#final-score");
+var EndScreen = document.querySelector("#hide");
+var finalScoreP = document.querySelector("#final-score");
 var inputInitials = document.querySelector("#initials");
 var submitBtn = document.querySelector("#submit-button");
-var divFeedback = document.querySelector("#feedback");
+var Feedback = document.querySelector("#feedback-hide");
 
 //Other variables
 var questionIndex = 0;
 var countdownTimer = 0;
+var highScoresList = document.createElement("highscores")
+choicesDiv.appendChild(highScoresList);
+var highScoresList = document.querySelector("highscores");
 
-
-
-//When the button is clicked, timer starts
-var time = 61;
-function startQuiz() {
-questionIndex = 0;
-totalTime = 60;
-timeLeft
-
-var orderList = document.createElement("p");
-divChoices.appendChild(orderList);
-let ol = document.querySelector("ol");
-
-ol.addEventListener("click", function (event) {
-    let element = event.target;
-    if (element.matches("button")) {
-      let state = element.getAttribute("data-state");
-      if (state == questions[questionIndex].correct) {
-        message("Correct!");
-      } else {
-        message("Wrong!");
-        countdownTimer -= 10;
-        console.log(countdownTimer);
-      }
-      questionIndex++;
-      ol.textContent = "";
-      getQuestion(questionIndex);
+//Event listener for highScoresList
+highScoresList.addEventListener("click", function (event) {
+  var element = event.target;
+  if (element.matches("button")) {
+    var state = element.getAttribute("data-state");
+    if (state == questions[questionIndex].correct) {
+      message("Correct!");
+    } else {
+      message("Wrong!");
+      countdownTimer -= 10;
+      console.log(countdownTimer);
     }
-  });
+    questionIndex++;
+    highScoresList.textContent = "";
+    getQuestion(questionIndex);
+  }
+});
 
-  /*** Functions */
+  //Functions
 
-  function startQuiz() {}
+  function startGame() {}
 function message(string) {
   console.log(string);
   let p1 = document.createElement("p");
   p1.textContent = string;
-  divChoices.appendChild(p1);
+  choicesDiv.appendChild(p1);
   let clearId = setInterval(function () {
     p1.textContent = "";
     console.log((p1.textContent = ""));
@@ -87,35 +78,32 @@ function startCountdown() {
   }
 
   function stopCountdown() {
-    // clearInterval(intervalId);
   }
 
-  function getQuestion(index) {
-    if (index < questions.length) {
-      h2Question.textContent = questions[index].question;
-      console.log(index);
+  function displayQuestions(index) {
+    if (questionIndex < questions.length) {
+      questionTitle.textContent = questions[questionIndex].question;
+      console.log(questionIndex);
       console.log(questions.length);
-      for (let i = 0; i < questions[index].answers.length; i++) {
+      for (let i = 0; i < questions[questionIndex].answers.length; i++) {
         let li = document.createElement("li");
-        let selectOlist = document.querySelector("ol");
-        selectOlist.appendChild(li);
+        let highScoresList = document.querySelector("ol");
+        highScoreslist.appendChild(li);
         let buttonAnswer = document.createElement("button");
         buttonAnswer.setAttribute("data-state", i);
         buttonAnswer.textContent = questions[index].answers[i];
         li.appendChild(buttonAnswer);
       }
     } else {
-      h2Question.textContent = "";
+      questionTitle.textContent = "";
     }
   }
 
-  buttonStart.addEventListener("click", function () {
+  startQuizz.addEventListener("click", function () {
     startCountdown();
-    // divStartScreen.classList.remove("start");
-    // divStartScreen.classList.add("hide");
-    divStartScreen.setAttribute("class", "hide");
-    divQuestions.setAttribute("class", "");
-    getQuestion(questionIndex);
+    divScreenStart.setAttribute("class", "hide");
+    questionsDiv.setAttribute("class", "");
+    displayQuestions(questionIndex);
   });
   
   // Retrieves the high scores from local storage
