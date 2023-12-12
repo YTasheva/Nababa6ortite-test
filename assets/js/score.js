@@ -4,7 +4,7 @@ var highscores = localStorage.getItem("scores");
 // Parse the JSON string into a JavaScript array
 var scoresArray = JSON.parse(highscores);
 
-// Select the HTML element where you want to display the high scores
+// Select the HTML element to display the high scores
 var highScoresList = document.getElementById("scores");
 
 // Loop over the array of high scores
