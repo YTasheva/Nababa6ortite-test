@@ -1,18 +1,30 @@
-var divStartScreen = document.querySelector("#start-screen");
-var buttonStart = document.querySelector("#start");
-var divQuestions = document.querySelector("#questions");
-var h2Question = document.querySelector("#question-title");
-var divChoices = document.querySelector("#choices");
+// References to elements
+var divScreenStart = document.querySelector("#start-screen");
+var startBtn = document.querySelector("#start-button");
+var questionsDiv = document.querySelector("#questionsDiv");
+var questionTitle = document.querySelector("#question-title");
+var choicesDiv = document.querySelector("#choicesDiv");
 var spanTime = document.querySelector("#time");
 var divEndScreen = document.querySelector("#end-screen");
 var spanFinalScore = document.querySelector("#final-score");
 var inputInitials = document.querySelector("#initials");
-var buttonSubmit = document.querySelector("#submit");
+var submitBtn = document.querySelector("#submit-button");
 var divFeedback = document.querySelector("#feedback");
 
-let questionIndex = 0;
-let countdownTimer = 0;
-let orderList = document.createElement("ol");
+//Other variables
+var questionIndex = 0;
+var countdownTimer = 0;
+
+
+
+//When the button is clicked, timer starts
+var time = 61;
+function startQuiz() {
+questionIndex = 0;
+totalTime = 60;
+timeLeft
+
+var orderList = document.createElement("p");
 divChoices.appendChild(orderList);
 let ol = document.querySelector("ol");
 
@@ -106,31 +118,46 @@ function startCountdown() {
     getQuestion(questionIndex);
   });
   
-  let highscore = JSON.parse(localStorage.getItem("scores")) || [];
-buttonSubmit.addEventListener("click", function (event) {
+  // Retrieves the high scores from local storage
+var highscore = localStorage.getItem("scores");
+
+// Parses the JSON string into a JavaScript array
+var scoresArray = JSON.parse(scores) || [];
+submitBtn.addEventListener("click", function (event) {
   event.preventDefault;
-  let initialStore = inputInitials.value;
-  let currentScore = {
-    initial: initialStore,
-    score: countdownTimer,
-  };
-  highscore.push(currentScore);
-  console.log(currentScore);
-  highscore.sort(function (a, b) {
-    // return a.score + b.score;
-    if (a.score > b.score) {
-      return -1;
-    }
 
-    if (a.score == b.score) {
-      return 0;
-    }
+// Add newScore to scoresArray
+var newScore = { initials: "ABC", score: 100 };
+scoresArray.push(newScore);
+console.log(newScore);
+scoresArray.sort(function(a, b) {
+  return a.score + b.score;
+  if (a.score > b.score) {
+    return -1;
+  }
 
-    if (a.score < b.score) {
-      return 1;
-    }
-  });
-  localStorage.setItem("scores", JSON.stringify(highscore));
-  document.location.assign("highscores.html");
+  if (a.score == b.score) {
+    return 0;
+  }       
+
+  if (a.score < b.score) {
+    return 1;
+  }
 });
-  
+
+// Converts the array back into a JSON string
+var scoresJSON = JSON.stringify(scoresArray);
+
+// Saves the JSON string in local storage
+localStorage.setItem("scores", scoresJSON);
+document.location.assign("highscores.html");
+}
+
+
+
+
+
+
+
+
+
