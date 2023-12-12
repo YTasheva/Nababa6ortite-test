@@ -1,11 +1,11 @@
-// Retrieved the high scores from local storage
+// Retrieve the high scores from local storage
 var highscores = localStorage.getItem("scores");
 
-// Parsed the JSON string into a JavaScript array
-var scoresArray = JSON.parse(scores);
+// Parse the JSON string into a JavaScript array
+var scoresArray = JSON.parse(highscores);
 
-// Selected the HTML element where you want to display the high scores
-var highScore = document.getElementById("scores");
+// Select the HTML element where you want to display the high scores
+var highScoresList = document.getElementById("scores");
 
 // Loop over the array of high scores
 for (var i = 0; i < scoresArray.length; i++) {
@@ -14,12 +14,13 @@ for (var i = 0; i < scoresArray.length; i++) {
   highScoresList.appendChild(newScoreElement);
 }
 
-// Removed the high scores from local storage
+// Remove the high scores from local storage
 var clearBtn = document.getElementById("clear");
 clearBtn.addEventListener("click", function () {
   localStorage.removeItem("scores");
   highScoresList.innerHTML = "";
 });
 
+// Clear all local storage
 localStorage.clear();
 
