@@ -105,8 +105,10 @@ startGame.addEventListener("click", function () {
   questionsDiv.setAttribute("class", "");
   displayQuestions(questionIndex);
 });
+
 submitBtn.addEventListener("click", function (event) {
-  event.preventDefault;
+  event.preventDefault();
+});
 
 // Add newScore to scoresArray
 var newScore = { initials: "ABC", score: 100 };
@@ -116,24 +118,19 @@ scoresArray.sort(function(a, b) {
   return a.score + b.score;
   if (a.score > b.score) {
     return -1;
-  }
-
-  if (a.score == b.score) {
-    return 0;
-  }       
-
-  if (a.score < b.score) {
+  } else if (a.score < b.score) {
     return 1;
+  } else {
+    return 0;
   }
-});
+  });
 
-// Convert the array back into a JSON string
-var scoresJSON = JSON.stringify(scoresArray);
+  // Convert the array back into a JSON string
+  var scoresJSON = JSON.stringify(scoresArray);
 
-// Save the JSON string in local storage
-localStorage.setItem("scores", scoresJSON);
-document.location.assign("highscores.html");
-}
+  // Save the JSON string in local storage
+  localStorage.setItem("scores", scoresJSON);
+  document.location.assign("highscores.html");
 
 
 
