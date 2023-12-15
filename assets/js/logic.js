@@ -1,6 +1,6 @@
 // References to elements
 var StartScreen = document.querySelector("#start-screen");
-var startGame = document.querySelector("#start-game");
+var startQuiz = document.querySelector("#start-quiz");
 var questionsDiv = document.querySelector("#questionsDiv");
 var questionTitle = document.querySelector("#question-title");
 var choicesDiv = document.querySelector("#choices");
@@ -99,30 +99,28 @@ function displayQuestions(index) {
   }
 }
 
-startGame.addEventListener("click", function () {
+startQuiz.addEventListener("click touch", function ()  {
   startCountdown();
   StartScreen.setAttribute("class", "hide");
   questionsDiv.setAttribute("class", "");
   displayQuestions(questionIndex);
 });
 
+var scoresArray = highscores ? JSON.parse(highscores) : [];
 submitBtn.addEventListener("click", function (event) {
   event.preventDefault();
-});
-
-// Add newScore to scoresArray
-var newScore = { initials: "ABC", score: 100 };
-scoresArray.push(newScore);
-console.log(newScore);
-scoresArray.sort(function(a, b) {
-  return a.score + b.score;
-  if (a.score > b.score) {
-    return -1;
-  } else if (a.score < b.score) {
-    return 1;
-  } else {
-    return 0;
-  }
+  // Add newScore to scoresArray
+  var newScore = { initials: inputInitials.value, score: countdownTimer };
+  scoresArray.push(newScore);
+  console.log(newScore);
+  scoresArray.sort(function(a, b) {
+    if (a.score > b.score) {
+      return -1;
+    } else if (a.score < b.score) {
+      return 1;
+    } else {
+      return 0;
+    }
   });
 
   // Convert the array back into a JSON string
@@ -131,6 +129,13 @@ scoresArray.sort(function(a, b) {
   // Save the JSON string in local storage
   localStorage.setItem("scores", scoresJSON);
   document.location.assign("highscores.html");
+});
+
+var preloadedScript = document.createElement("script");
+preloadedScript.src = "./assets/js/logic.js";
+document.body.appendChild(preloadedScript);
+
+
 
 
 
