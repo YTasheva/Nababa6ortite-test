@@ -2,10 +2,10 @@
 var highScoresList = document.querySelector("highscores");
 
 // Parse the JSON string into a JavaScript array
-var scoresArray = JSON.parse(localStorage.getItem("score")) || [];
+var scoresArray = JSON.parse(localStorage.getItem("scores")) || [];
 
 // Select the HTML element to display the high scores
-var scoresListElement = document.querySelector("score");
+var scoresListElement = document.querySelector("scores");
 
 // Loop over the array of high scores
 for (var i = 0; i < scoresArray.length; i++) {
