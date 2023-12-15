@@ -1,5 +1,5 @@
 // Retrieve the high scores from local storage
-var highscores = localStorage.getItem("scores");
+var highScoresList = document.querySelector("highscores");
 
 // Parse the JSON string into a JavaScript array
 var scoresArray = highscores ? JSON.parse(highscores) : [];

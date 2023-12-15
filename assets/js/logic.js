@@ -16,7 +16,7 @@ var questionIndex = 0;
 var countdownTimer = 0;
 var highScoresList = document.createElement("highscores");
 choicesDiv.appendChild(highScoresList);
-var highScoresList = document.querySelector("highscores");
+var highscores = document.querySelector("highscores");
 
 //Event listener for highScoresList
 highScoresList.addEventListener("click", function (event) {
@@ -35,6 +35,7 @@ highScoresList.addEventListener("click", function (event) {
     getQuestion(questionIndex);
   }
 });
+
 
 //Functions
 
@@ -107,9 +108,11 @@ el && el.addEventListener('click', function() {
   questionsDiv.setAttribute("class", "");
   displayQuestions(questionIndex);
   TIMER = setInterval(renderCounter, 1000); 
+  renderCounter();
+});
 
-var scoresArray = highscores ? JSON.parse(highscores) : [];
-submitBtn.addEventListener("click", function (event) {
+var scoresArray = JSON.parse(localStorage.getItem("score"));
+submitBtn.addEventListener("click", function(event) {
   event.preventDefault();
   // Add newScore to scoresArray
   var newScore = { initials: inputInitials.value, score: countdownTimer };
@@ -137,4 +140,4 @@ submitBtn.addEventListener("click", function (event) {
 var preloadedScript = document.createElement("script");
 preloadedScript.src = "./assets/js/logic.js";
 document.body.appendChild(preloadedScript);
-});
+;
