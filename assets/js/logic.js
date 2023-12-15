@@ -99,12 +99,14 @@ function displayQuestions(index) {
   }
 }
 
-startQuiz.addEventListener("click touch", function ()  {
+var el = document.getElementById("start-quiz");
+el && el.addEventListener('click', function() {
+  startGame();
   startCountdown();
   StartScreen.setAttribute("class", "hide");
   questionsDiv.setAttribute("class", "");
   displayQuestions(questionIndex);
-});
+  TIMER = setInterval(renderCounter, 1000); 
 
 var scoresArray = highscores ? JSON.parse(highscores) : [];
 submitBtn.addEventListener("click", function (event) {
@@ -131,17 +133,8 @@ submitBtn.addEventListener("click", function (event) {
   document.location.assign("highscores.html");
 });
 
+// Preload the logic.js file  
 var preloadedScript = document.createElement("script");
 preloadedScript.src = "./assets/js/logic.js";
 document.body.appendChild(preloadedScript);
-
-
-
-
-
-
-
-
-
-
-
+});

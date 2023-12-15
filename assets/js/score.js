@@ -2,7 +2,7 @@
 var highscores = localStorage.getItem("scores");
 
 // Parse the JSON string into a JavaScript array
-var scoresArray = JSON.parse(highscores);
+var scoresArray = highscores ? JSON.parse(highscores) : [];
 
 // Select the HTML element to display the high scores
 var highScoresList = document.getElementById("scores");
@@ -21,6 +21,6 @@ clearBtn.addEventListener("click", function () {
   highScoresList.innerHTML = "";
 });
 
-// Clear all local storage
-localStorage.clear();
+// localStorage.clear();
+
 
