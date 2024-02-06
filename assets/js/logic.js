@@ -62,10 +62,6 @@ function countdownOn() {
     countTimer--;
     spanTime.textContent = countTimer;
     console.log(countTimer);
-    if (countTimer > 0 && quesIndex >= questions.length) {
-      clearInterval(intervalId);
-      spanTime.textContent = countTimer;
-      console.log(countTimer);
 if (countTimer > 0 && quesIndex >= questions.length) {
       clearInterval(intervalId);
       spanTime.textContent = countTimer;
@@ -100,7 +96,7 @@ function displayQuestion(index) {
   }
 }
 
-buttonOn.addEventListener("click", function (event) {
+buttonOn.addEventListener("click", function () {
   startCount();
 
   StartScreen.setAttribute("class", "hide");
@@ -108,7 +104,7 @@ buttonOn.addEventListener("click", function (event) {
   displayQuestion(quesIndex);
 });
 
-var highScores= JSON.parse(localStorage.getItem("scores"));
+var highScores = JSON.parse(localStorage.getItem("scores"));
 submitBtn.addEventListener("click", function (event) {
 event.preventDefault();
 
