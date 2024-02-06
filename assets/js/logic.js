@@ -1,38 +1,38 @@
 // References to elements
 var StartScreen = document.querySelector("#start-screen");
-var startQuiz = document.querySelector("#start-quiz");
-var questionsDiv = document.querySelector("#questionsDiv");
+var startQuiz = document.querySelector("#start");
+var questionsDiv = document.querySelector("#questions");
 var questionTitle = document.querySelector("#question-title");
 var choicesDiv = document.querySelector("#choices");
 var spanTime = document.querySelector("#time");
 var EndScreen = document.querySelector("#hide");
 var finalScoreP = document.querySelector("#final-score");
 var inputInitials = document.querySelector("#initials");
-var submitBtn = document.querySelector("#submit-button");
-var Feedback = document.querySelector("#feedback-hide");
+var submitBtn = document.querySelector("#submit");
+var Feedback = document.querySelector("#feedback");
 
 //Other variables
-var questionIndex = 0;
-var countdownTimer = 0;
-var highScoresList = document.createElement("highscores");
+var quesIndex = 0;
+var countTimer = 0;
+var highScoresList = document.createElement("ol");
 choicesDiv.appendChild(highScoresList);
-var highscores = document.querySelector("highscores");
+var ol = document.querySelector("ol");
 
 //Event listener for highScoresList
-highScoresList.addEventListener("click", function (event) {
+ol.addEventListener("click", function (event) {
   var element = event.target;
   if (element.matches("button")) {
-    var state = element.getAttribute("data-state");
-    if (state == questions[questionIndex].correct) {
+    var state = element.fetchAttr("data-state");
+    if (state == questions[quesIndex].correct) {
       message("Correct!");
     } else {
       message("Wrong!");
-      countdownTimer -= 10;
-      console.log(countdownTimer);
+      countTimer -= 10;
+      console.log(countTimer);
     }
-    questionIndex++;
-    highScoresList.textContent = "";
-    getQuestion(questionIndex);
+    quesIndex++;
+    ol.textContent = "";
+    fetchQuestion(quesIndex);
   }
 });
 
@@ -49,95 +49,89 @@ function message(string) {
   let clearId = setInterval(function () {
     p1.textContent = "";
     console.log((p1.textContent = ""));
-    setTimeout(function () {
+    timeendSet(function () {
       clearInterval(clearId);
     }, 1000);
   }, 1000);
 }
 
-function startCountdown() {
-  countdownTimer = 60;
-  spanTime.textContent = countdownTimer;
+function countdownOn() {
+  countTimer = 60;
+  spanTime.textContent = countTimer;
   let intervalId = setInterval(function () {
-    countdownTimer--;
-    spanTime.textContent = countdownTimer;
-    console.log(countdownTimer);
-    if (countdownTimer > 0 && questionIndex >= questions.length) {
+    countTimer--;
+    spanTime.textContent = countTimer;
+    console.log(countTimer);
+    if (countTimer > 0 && quesIndex >= questions.length) {
       clearInterval(intervalId);
-      spanTime.textContent = countdownTimer;
+      spanTime.textContent = countTimer;
+      console.log(countTimer);
+if (countTimer > 0 && quesIndex >= questions.length) {
+      clearInterval(intervalId);
+      spanTime.textContent = countTimer;
       questionsDiv.setAttribute("class", "hide");
       EndScreen.setAttribute("class", "start");
-      finalScoreP.textContent = countdownTimer;
-    }
-    if (countdownTimer <= 0) {
-      clearInterval(intervalId);
-      spanTime.textContent = 0;
-      questionsDiv.setAttribute("class", "hide");
-      EndScreen.setAttribute("class", "start");
-      finalScoreP.textContent = 0;
+      finalScoreP.textContent = countTimer;
     }
   }, 1000);
 }
 
-function stopCountdown() {}
+function stopCount() {
+  clearInterval(countTimer);
+  spanTime.textContent = countTimer;
+}
 
-function displayQuestions(index) {
-  if (questionIndex < questions.length) {
-    questionTitle.textContent = questions[questionIndex].question;
-    console.log(questionIndex);
+function displayQuestion(index) {
+  if (index < questions.length) {
+    questionTitle.textContent = questions[index].question;
+    console.log(index);
     console.log(questions.length);
-    for (let i = 0; i < questions[questionIndex].answers.length; i++) {
+    for (let i = 0; i < questions[index].answers.length; i++) {
       let li = document.createElement("li");
-      let ol = document.querySelector("ol");
-      ol.appendChild(li);
-      let buttonAnswer = document.createElement("button");
-      buttonAnswer.setAttribute("data-state", i);
-      buttonAnswer.textContent = questions[index].answers[i];
-      li.appendChild(buttonAnswer);
+      let highScoresList = document.querySelector("ol");
+      highScoresList.appendChild(li);
+      let buttonOn= document.createElement("button");
+      buttonOn.setAttribute("data-state", i);
+      buttonOn.textContent = questions[index].answers[i];
+      li.appendChild(buttonOn);
     }
   } else {
     questionTitle.textContent = "";
   }
 }
 
-var el = document.getElementById("start-quiz");
-el && el.addEventListener('click', function() {
-  startGame();
-  startCountdown();
+buttonOn.addEventListener("click", function (event) {
+  startCount();
+
   StartScreen.setAttribute("class", "hide");
   questionsDiv.setAttribute("class", "");
-  displayQuestions(questionIndex);
-  TIMER = setInterval(renderCounter, 1000); 
-  renderCounter();
+  displayQuestion(quesIndex);
 });
 
-var scoresArray = JSON.parse(localStorage.getItem("score"));
-submitBtn.addEventListener("click", function(event) {
-  event.preventDefault();
-  // Add newScore to scoresArray
-  var newScore = { initials: inputInitials.value, score: countdownTimer };
-  scoresArray.push(newScore);
-  console.log(newScore);
-  scoresArray.sort(function(a, b) {
-    if (a.score > b.score) {
-      return -1;
-    } else if (a.score < b.score) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
+var highScores= JSON.parse(localStorage.getItem("scores"));
+submitBtn.addEventListener("click", function (event) {
+event.preventDefault();
 
-  // Convert the array back into a JSON string
-  var scoresJSON = JSON.stringify(scoresArray);
+var firstStore = inputInitials.value;
+var newScore = {
+  initials: firstStore,
+  score: countTimer,
+};
+highScores.push(newScore);
+console.log(newScore);
+highScores.sort(function (a, b) {
+  if (a.score > b.score) {
+    return -1;
+  } else if (a.score < b.score) {
+    return 1;
+  } else {
+    return 0;
+  }
+
+});
+
 
   // Save the JSON string in local storage
-  localStorage.setItem("scores", scoresJSON);
-  document.location.assign("highscores.html");
-});
-
-// Preload the logic.js file  
-var preloadedScript = document.createElement("script");
-preloadedScript.src = "./assets/js/logic.js";
-document.body.appendChild(preloadedScript);
-;
+  localStorage.setItem("scores", JSON.stringify(highScores));
+  document.location.assign("highcores.html");
+  });
