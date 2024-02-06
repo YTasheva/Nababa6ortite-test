@@ -1,6 +1,6 @@
 // References to elements
-var StartScreen = document.querySelector("#start-screen");
-var startQuiz = document.querySelector("#start");
+var startScreen = document.querySelector("#start-screen");
+var startButtonQuiz = document.querySelector("#start");
 var questionsDiv = document.querySelector("#questions");
 var questionTitle = document.querySelector("#question-title");
 var choicesDiv = document.querySelector("#choices");
@@ -8,7 +8,7 @@ var spanTime = document.querySelector("#time");
 var EndScreen = document.querySelector("#hide");
 var finalScoreP = document.querySelector("#final-score");
 var inputInitials = document.querySelector("#initials");
-var submitBtn = document.querySelector("#submit");
+var submitButton = document.querySelector("#submit");
 var Feedback = document.querySelector("#feedback");
 
 //Other variables
@@ -96,16 +96,16 @@ function displayQuestion(index) {
   }
 }
 
-buttonOn.addEventListener("click", function () {
+startButtonQuiz.addEventListener("click", function (event) {
   startCount();
 
-  StartScreen.setAttribute("class", "hide");
+  startScreen.setAttribute("class", "hide");
   questionsDiv.setAttribute("class", "");
   displayQuestion(quesIndex);
 });
 
-var highScores = JSON.parse(localStorage.getItem("scores"));
-submitBtn.addEventListener("click", function (event) {
+var highScores= JSON.parse(localStorage.getItem("scores"));
+submitButton.addEventListener("click", function (event) {
 event.preventDefault();
 
 var firstStore = inputInitials.value;

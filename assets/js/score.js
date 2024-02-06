@@ -8,8 +8,8 @@ for (let i = 0; i < highScores.length; i++) {
 }
 
 // Remove the high scores from local storage
-var clearBtn = document.getElementById("#clear");
-clearBtn.addEventListener("click", function () {
+var buttonClear = document.getElementById("#clear");
+buttonClear.addEventListener("click", function () {
   localStorage.removeItem("scores");
   highScoresList.innerHTML = "";
 });
