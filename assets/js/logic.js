@@ -5,7 +5,7 @@ var questionsDiv = document.querySelector("#questions");
 var questionTitle = document.querySelector("#question-title");
 var choicesDiv = document.querySelector("#choices");
 var spanTime = document.querySelector("#time");
-var EndScreen = document.querySelector("#hide");
+var EndScreen = document.querySelector("#end-screen");
 var finalScoreP = document.querySelector("#final-score");
 var inputInitials = document.querySelector("#initials");
 var submitButton = document.querySelector("#submit");
@@ -14,15 +14,15 @@ var Feedback = document.querySelector("#feedback");
 //Other variables
 var quesIndex = 0;
 var countTimer = 0;
-var highScoresList = document.createElement("ol");
-choicesDiv.appendChild(highScoresList);
+var olList = document.createElement("ol");
+choicesDiv.appendChild(olList);
 var ol = document.querySelector("ol");
 
 //Event listener for highScoresList
 ol.addEventListener("click", function (event) {
   var element = event.target;
   if (element.matches("button")) {
-    var state = element.fetchAttr("data-state");
+    var state = element.getAttribute("data-state");
     if (state == questions[quesIndex].correct) {
       message("Correct!");
     } else {
@@ -32,10 +32,9 @@ ol.addEventListener("click", function (event) {
     }
     quesIndex++;
     ol.textContent = "";
-    fetchQuestion(quesIndex);
+    displayQuestion(quesIndex);
   }
 });
-
 
 //Functions
 
@@ -49,7 +48,7 @@ function message(string) {
   let clearId = setInterval(function () {
     p1.textContent = "";
     console.log((p1.textContent = ""));
-    timeendSet(function () {
+    clearTimeout(function () {
       clearInterval(clearId);
     }, 1000);
   }, 1000);
@@ -62,7 +61,7 @@ function countdownOn() {
     countTimer--;
     spanTime.textContent = countTimer;
     console.log(countTimer);
-if (countTimer > 0 && quesIndex >= questions.length) {
+    if (countTimer > 0 && quesIndex >= questions.length) {
       clearInterval(intervalId);
       spanTime.textContent = countTimer;
       questionsDiv.setAttribute("class", "hide");
@@ -86,48 +85,47 @@ function displayQuestion(index) {
       let li = document.createElement("li");
       let highScoresList = document.querySelector("ol");
       highScoresList.appendChild(li);
-      let buttonOn= document.createElement("button");
-      buttonOn.setAttribute("data-state", i);
-      buttonOn.textContent = questions[index].answers[i];
-      li.appendChild(buttonOn);
+      let buttonAnswerOn = document.createElement("button");
+      buttonAnswerOn.setAttribute("data-state", i);
+      buttonAnswerOn.textContent = questions[index].answers[i];
+      li.appendChild(buttonAnswerOn);
     }
   } else {
     questionTitle.textContent = "";
   }
 }
 
-startButtonQuiz.addEventListener("click", function (event) {
-  startCount();
+startButtonQuiz.addEventListener("click", function () {
+  countdownOn();
 
   startScreen.setAttribute("class", "hide");
   questionsDiv.setAttribute("class", "");
   displayQuestion(quesIndex);
 });
 
-var highScores= JSON.parse(localStorage.getItem("scores"));
+var highScores = JSON.parse(localStorage.getItem("scores")) || []; 
 submitButton.addEventListener("click", function (event) {
-event.preventDefault();
+  event.preventDefault();
 
-var firstStore = inputInitials.value;
-var newScore = {
-  initials: firstStore,
-  score: countTimer,
-};
-highScores.push(newScore);
-console.log(newScore);
-highScores.sort(function (a, b) {
-  if (a.score > b.score) {
-    return -1;
-  } else if (a.score < b.score) {
-    return 1;
-  } else {
-    return 0;
-  }
-
-});
-
+  var firstStore = inputInitials.value;
+  var newScore = {
+    initials: firstStore,
+    score: countTimer,
+  };
+  highScores.push(newScore);
+  console.log(newScore);
+  highScores.sort(function (a, b) {
+    if (a.score > b.score) {
+      return -1;
+    } else if (a.score < b.score) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
 
   // Save the JSON string in local storage
   localStorage.setItem("scores", JSON.stringify(highScores));
   document.location.assign("highcores.html");
-  });
+});
+
