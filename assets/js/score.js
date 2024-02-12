@@ -4,11 +4,11 @@ var highScores = JSON.parse(localStorage.getItem("scores")) || [];
 for (let i = 0; i < highScores.length; i++) {
   let li = document.createElement("li");
   highScoresList.appendChild(li);
-  li.textContent = `${highScores[i].initial} (${highScores[i].score}) points`;
+  li.textContent = `${highScores[i].initials} (${highScores[i].score}) points`;
 }
 
 // Remove the high scores from local storage
-var buttonClear = document.getElementById("#clear");
+var buttonClear = document.querySelector("#clear"); 
 buttonClear.addEventListener("click", () => {
   localStorage.removeItem("scores");
   highScoresList.textContent = "";
