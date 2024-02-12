@@ -5,7 +5,7 @@
 - [Overview](#overview)
   - [The Challenge](#the-challenge)
   - [Acceptance Criteria](#acceptance-criteria)
-  - [Screenshot](#screenshot)
+  - [Demo](#demo)
   - [Links](#links)
   - [Built With](#built-with)
 - [Installation](#installation)
@@ -47,9 +47,9 @@
 
 * The application resembles the mock-up functionality provided in the challenge instructions.
  
-### Screenshot
+### Demo
 
-
+![Quiz demo](/video/Nababa6ortite_test.gif)
 
 ### Links
 
