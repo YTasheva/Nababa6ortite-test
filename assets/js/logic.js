@@ -68,12 +68,19 @@ function countdownOn() {
       EndScreen.setAttribute("class", "start");
       finalScoreP.textContent = countTimer;
     }
+    if (countTimer <= 0) {
+      clearInterval(intervalId);
+      spanTime.textContent = 0;
+      questionsDiv.setAttribute("class", "hide");
+      EndScreen.setAttribute("class", "start");
+      finalScoreP.textContent = 0;
+    }
   }, 1000);
 }
 
 function stopCount() {
-  clearInterval(countTimer);
-  spanTime.textContent = countTimer;
+  // clearInterval(countTimer);
+  // spanTime.textContent = countTimer;
 }
 
 function displayQuestion(index) {
@@ -107,20 +114,22 @@ var highScores = JSON.parse(localStorage.getItem("scores")) || [];
 submitButton.addEventListener("click", function (event) {
   event.preventDefault();
 
-  var firstStore = inputInitials.value;
-  var newScore = {
-    initials: firstStore,
+  var initialsStore = inputInitials.value;
+  var finalScore = {
+    initials: initialsStore,
     score: countTimer,
   };
-  highScores.push(newScore);
-  console.log(newScore);
+  highScores.push(finalScore);
+  console.log(finalScore);
   highScores.sort(function (a, b) {
     if (a.score > b.score) {
       return -1;
-    } else if (a.score < b.score) {
-      return 1;
-    } else {
+    } 
+    if (a.score == b.score) {
       return 0;
+    } 
+    if (a.score < b.score) {
+      return 1;
     }
   });
 
