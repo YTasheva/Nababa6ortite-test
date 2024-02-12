@@ -49,7 +49,7 @@
  
 ### Demo
 
-![Quiz demo](/video/Nababa6ortite_test.gif)
+<img width="1497" alt="Quiz Demo" src="https://github.com/YTasheva/Nababa6ortite-test/blob/main/Video/Nababa6ortite_test.gif">
 
 ### Links
 
