@@ -125,7 +125,7 @@ submitButton.addEventListener("click", function (event) {
     if (a.score > b.score) {
       return -1;
     } 
-    if (a.score == b.score) {
+    if (a.score === b.score) {
       return 0;
     } 
     if (a.score < b.score) {
@@ -135,6 +135,6 @@ submitButton.addEventListener("click", function (event) {
 
   // Save the JSON string in local storage
   localStorage.setItem("scores", JSON.stringify(highScores));
-  document.location.assign("highcores.html");
+  document.location.assign("highscores.html");
 });
 
