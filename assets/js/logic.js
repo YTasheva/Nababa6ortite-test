@@ -38,8 +38,6 @@ ol.addEventListener("click", function (event) {
 
 //Functions
 
-function startGame() {}
-
 function message(string) {
   console.log(string);
   let p1 = document.createElement("p");
